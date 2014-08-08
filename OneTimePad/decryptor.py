@@ -21,7 +21,7 @@ def decrypt(key, msg):
 
 def main():
     MSGS = []
-    I = open('Output.txt', 'r')
+    I = open('Encrypted.txt', 'r')
     K = open('Key.txt','r')
     O = open('Decrypted.txt','w')
     
