@@ -6,8 +6,7 @@ Created on Aug 5, 2014
 
 import sys
 
-MSGS = []
-KEY = ""
+
 #Strings have to be decoded if the string is in hex
 def strxor(a, b):     # xor two strings of different lengths
     if len(a) > len(b):
@@ -16,14 +15,15 @@ def strxor(a, b):     # xor two strings of different lengths
         return "".join([chr(ord(x) ^ ord(y)) for (x, y) in zip(a, b[:len(a)])])
    
 def search(i,j,MSGS):
-    for x in xrange(10):
+    for m in MSGS:
         count=0
-        for y in xrange(10):
-            temp=strxor(MSGS[x][i:j].decode('hex'),MSGS[y][i:j].decode('hex'))
+        for n in MSGS:
+            temp=strxor(m[i:j].decode('hex'),n[i:j].decode('hex'))
             if ((temp>= "A" and temp<= "Z") or (temp>= "a" and temp<= "z")):
                 count+=1
-            if count > 5:
-                return MSGS[x][i:j]
+            if count > 3:
+                
+                return strxor(m[i:j].decode('hex'),"20".decode('hex')).encode('hex')
     return "00"
 
 def findKey(MSGS):
@@ -33,14 +33,15 @@ def findKey(MSGS):
         
     return key
             
-def test():
+def test(MSGS):
     
-    i=4
-    j=6
+    i=8
+    j=10
+    #print MSGS[0][i:j]
     
-    for x in xrange(10):
+    for x in xrange(5):
         count=0
-        for y in xrange(10):
+        for y in xrange(5):
             temp=strxor(MSGS[x][i:j].decode('hex'),MSGS[y][i:j].decode('hex'))
             print "M" +str(x)+ " x M" + str(y) + "    " + temp.encode('hex')
             if ((temp>= "A" and temp<= "Z") or (temp>= "a" and temp<= "z")):
@@ -52,7 +53,7 @@ def test():
                 return MSGS[x][i:j]
     return "00".decode('hex')
     
-def test2():
+def test2(MSGS):
     x=0
     y=1
     i=0
@@ -68,22 +69,15 @@ def test2():
     
 def main():
     MSGS = []
-    I = open('Output.txt', 'r')
-    K = open('Key.txt','r')
-    O = open('Decrypted.txt','w')
+    I = open('Encrypted2.txt', 'r')
+    K = open('FoundKey.txt','w')
     
     for line in I:
         MSGS.append(line.rstrip('\n'))
-    
-    key = K.readline().rstrip('\n')
-    ciphertexts = [decrypt(key, msg) for msg in MSGS]
-    for msg in MSGS:
-        O.write(decrypt(key, msg)+ "\n")
-    
-    
-    #print findKey(MSGS)
-    print strxor(findKey(MSGS).decode('hex'),MSGS[0].decode('hex'))
-    #test()
+        
+    print findKey(MSGS)
+    K.write(findKey(MSGS) + "\n")
+
 
 if __name__ == "__main__":
     main()

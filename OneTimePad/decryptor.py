@@ -21,15 +21,14 @@ def decrypt(key, msg):
 
 def main():
     MSGS = []
-    I = open('Encrypted.txt', 'r')
-    K = open('Key.txt','r')
+    I = open('Encrypted2.txt', 'r')
+    K = open('FoundKey.txt','r')
     O = open('Decrypted.txt','w')
     
     for line in I:
         MSGS.append(line.rstrip('\n'))
     
     key = K.readline().rstrip('\n')
-    ciphertexts = [decrypt(key, msg) for msg in MSGS]
     for msg in MSGS:
         O.write(decrypt(key, msg)+ "\n")
 
