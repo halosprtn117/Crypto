@@ -7,6 +7,7 @@ import sys
 
 MSGS = []
 I = open('Input.txt', 'r')
+K = open('Key.txt', 'w')
 O = open('Output.txt','w')
 for line in I:
     MSGS.append(line.rstrip('\n'))
@@ -29,7 +30,7 @@ def random(size=16):
 def encrypt(key, msg):
     c = strxor(key, msg)
     print
-    O.write(c.encode('hex') + "\n")
+    K.write(c.encode('hex') + "\n")
     print c.encode('hex')
     return c
 
