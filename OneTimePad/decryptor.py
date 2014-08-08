@@ -6,8 +6,8 @@ Created on Aug 5, 2014
 import sys
 
 MSGS = []
-I = open('Input.txt', 'r')
-O = open('Output.txt','w')
+I = open('Output.txt', 'r')
+O = open('Decrypted.txt','w')
 for line in I:
     MSGS.append(line.rstrip('\n'))
 
@@ -21,12 +21,7 @@ def strxor(a, b):     # xor two strings of different lengths
     else:
         return "".join([chr(ord(x) ^ ord(y)) for (x, y) in zip(a, b[:len(a)])])
 
-def random(size=16):
-    this=open("/dev/urandom").read(size)
-    O.write(this.encode('hex') + "\n")
-    return this
-
-def encrypt(key, msg):
+def decrypt(key, msg):
     c = strxor(key, msg)
     print
     O.write(c.encode('hex') + "\n")
