@@ -31,7 +31,7 @@ def main():
     key = K.readline().rstrip('\n')
     ciphertexts = [decrypt(key, msg) for msg in MSGS]
     for msg in MSGS:
-        O.write(decrypt(key, msg).encode('hex') + "\n")
+        O.write(decrypt(key, msg)+ "\n")
 
         
 if __name__ == "__main__":
