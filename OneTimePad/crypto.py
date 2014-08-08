@@ -6,6 +6,10 @@ Created on Aug 5, 2014
 
 import sys
 
+MSGS2 = ["This ", "Thi s", "Th is", "T his", " This"]
+
+
+
 MSGS = ["315c4eeaa8b5f8aaf9174145bf43e1784b8fa00dc71d885a804e5ee9fa40b16349c146fb778cdf2d3aff021dfff5b403b510d0d0455468aeb98622b137dae857553ccd8883a7bc37520e06e515d22c954eba5025b8cc57ee59418ce7dc6bc41556bdb36bbca3e8774301fbcaa3b83b220809560987815f65286764703de0f3d524400a19b159610b11ef3e",
         "234c02ecbbfbafa3ed18510abd11fa724fcda2018a1a8342cf064bbde548b12b07df44ba7191d9606ef4081ffde5ad46a5069d9f7f543bedb9c861bf29c7e205132eda9382b0bc2c5c4b45f919cf3a9f1cb74151f6d551f4480c82b2cb24cc5b028aa76eb7b4ab24171ab3cdadb8356f",
         "32510ba9a7b2bba9b8005d43a304b5714cc0bb0c8a34884dd91304b8ad40b62b07df44ba6e9d8a2368e51d04e0e7b207b70b9b8261112bacb6c866a232dfe257527dc29398f5f3251a0d47e503c66e935de81230b59b7afb5f41afa8d661cb",
@@ -47,45 +51,60 @@ def search(i,j,MSGS):
     for x in xrange(10):
         count=0
         for y in xrange(10):
-            temp=strxor(MSGS[x].decode('hex')[i:j],MSGS[y].decode('hex')[i:j])
+            temp=strxor(MSGS[x][i:j].decode('hex'),MSGS[y][i:j].decode('hex'))
             if ((temp>= "A" and temp<= "Z") or (temp>= "a" and temp<= "z")):
                 count+=1
-            if count > 8:
+            if count > 5:
                 #return strxor(temp,"20".decode('hex'))
                 #print
-                print "M"+str(x)+"xM"+ str(y)+"Loc"+str(i)+" "+str(j)
-                print MSGS[x][i:j].decode('hex')
-                return MSGS[x][i:j].decode('hex')
-    return "00".decode('hex')
+                #print "M"+str(x)+"xM"+ str(y)+"Loc"+str(i)+" "+str(j)
+                #print MSGS[x][i:j]
+                return MSGS[x][i:j]
+    return "00"
 
 def findKey(MSGS):
     key=""
     for x in range(0,1024,2):
-        key += search(x,x+1,MSGS)
+        key += search(x,x+2,MSGS)
         
     return key
             
 def test():
     
-    i=1
-    j=2
+    i=4
+    j=6
+    
     for x in xrange(10):
-        count=0;
+        count=0
         for y in xrange(10):
-            temp=strxor(MSGS[x].decode('hex')[i:j],MSGS[y].decode('hex')[i:j])
+            temp=strxor(MSGS[x][i:j].decode('hex'),MSGS[y][i:j].decode('hex'))
             print "M" +str(x)+ " x M" + str(y) + "    " + temp.encode('hex')
             if ((temp>= "A" and temp<= "Z") or (temp>= "a" and temp<= "z")):
                 count+=1
-                print count
-            if count > 8:
-                print temp.encode('hex')
+            if count > 5:
+                print 
+                print x
+                print MSGS[x][i:j]
+                return MSGS[x][i:j]
+    return "00".decode('hex')
+    
+def test2():
+    x=0
+    y=1
+    i=0
+    j=2
+    print MSGS[x][i:j]
+    print MSGS[y][i:j]
+    print strxor(MSGS[x][i:j].decode('hex'),MSGS[y][i:j].decode('hex')).encode('hex')
+    
+    #for x in range(0,1024,2):
+    #    print x
 
-    temp2=strxor(MSGS[8].decode('hex')[i:j],"20".decode('hex')).encode('hex')
-    print temp2
-    print
-
+    
+    
 def main():
-    print findKey(MSGS).encode('hex')
+    #print findKey(MSGS)
+    print strxor(findKey(MSGS).decode('hex'),MSGS[0].decode('hex'))
     #test()
 
 if __name__ == "__main__":
