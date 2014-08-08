@@ -25,7 +25,7 @@ def main():
     MSGS = []
     I = open('Input.txt', 'r')
     K = open('Key.txt', 'w')
-    O = open('Output.txt','w')
+    O = open('Encrypted.txt','w')
     for line in I:
         MSGS.append(line.rstrip('\n'))
         
