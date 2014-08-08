@@ -24,13 +24,13 @@ def strxor(a, b):     # xor two strings of different lengths
 
 def random(size=16):
     this=open("/dev/urandom").read(size)
-    O.write(this.encode('hex') + "\n")
+    K.write(this.encode('hex') + "\n")
     return this
 
 def encrypt(key, msg):
     c = strxor(key, msg)
     print
-    K.write(c.encode('hex') + "\n")
+    O.write(c.encode('hex') + "\n")
     print c.encode('hex')
     return c
 

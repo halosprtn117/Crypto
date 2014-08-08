@@ -5,15 +5,6 @@ Created on Aug 5, 2014
 '''
 import sys
 
-MSGS = []
-I = open('Output.txt', 'r')
-O = open('Decrypted.txt','w')
-for line in I:
-    MSGS.append(line.rstrip('\n'))
-
-
-
-#MSGS = ["this", "that"]
 
 def strxor(a, b):     # xor two strings of different lengths
     if len(a) > len(b):
@@ -22,16 +13,26 @@ def strxor(a, b):     # xor two strings of different lengths
         return "".join([chr(ord(x) ^ ord(y)) for (x, y) in zip(a, b[:len(a)])])
 
 def decrypt(key, msg):
-    c = strxor(key, msg)
+    #strxor(MSGS[x][i:j].decode('hex'),MSGS[y][i:j].decode('hex')).encode('hex')
+    c = strxor(key.decode('hex'), msg.decode('hex'))
     print
-    O.write(c.encode('hex') + "\n")
-    print c.encode('hex')
+    print c
     return c
 
 def main():
-    key = random(1024)
-    ciphertexts = [encrypt(key, msg) for msg in MSGS]
-        
+    MSGS = []
+    I = open('Output.txt', 'r')
+    K = open('Key.txt','r')
+    O = open('Decrypted.txt','w')
+    
+    for line in I:
+        MSGS.append(line.rstrip('\n'))
+    
+    key = K.readline().rstrip('\n')
+    ciphertexts = [decrypt(key, msg) for msg in MSGS]
+    for msg in MSGS:
+        O.write(decrypt(key, msg).encode('hex') + "\n")
+
         
 if __name__ == "__main__":
     main()
