@@ -15,43 +15,46 @@ def strxor(a, b):     # xor two strings of different lengths
         return "".join([chr(ord(x) ^ ord(y)) for (x, y) in zip(a, b[:len(a)])])
    
 def search(i,j,MSGS):
-    for m in MSGS:
+    crount=0
+    for x in xrange(0,256):
+        k = "{:02x}".format(x)
         
         
         
-        
-        count=0
-        
-        
-        
-        
-        
-        for n in MSGS:
-            temp=strxor(m[i:j].decode('hex'),n[i:j].decode('hex'))
-            if ((temp>= "A" and temp<= "Z") or (temp>= "a" and temp<= "z")):
+        count = 0
+
+        for m in MSGS:
+            temp=strxor(m[i:j].decode('hex'),k[i:j].decode('hex'))
+                        
+            if temp < "7f".decode('hex'):
                 count+=1
-            if count > 3:
-                
-                return strxor(m[i:j].decode('hex'),"20".decode('hex')).encode('hex')
-    return "00"
+            if count > len(MSGS)-1:
+                print "stop: " + k
+                print x
+                crount+=1
+                print crount
+                print
+                #return k
 
 def findKey(MSGS):
     key=""
     for x in range(0,1024,2):
+        print x
         key += search(x,x+2,MSGS)
         
     return key
     
 def main():
     MSGS = []
-    I = open('Encrypted2.txt', 'r')
+    I = open('Encrypted.txt', 'r')
     K = open('FoundKey.txt','w')
     
     for line in I:
         MSGS.append(line.rstrip('\n'))
         
-    print findKey(MSGS)
-    K.write(findKey(MSGS) + "\n")
+    #print findKey(MSGS)
+    #K.write(findKey(MSGS) + "\n")
+    search(0,2,MSGS)
 
 
 if __name__ == "__main__":
