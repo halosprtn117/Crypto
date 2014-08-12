@@ -25,12 +25,11 @@ def search(i,j,MSGS):
 
         for m in MSGS:
             temp=strxor(m[i:j].decode('hex'),k[i:j].decode('hex'))
-                        
-            if temp < "7f".decode('hex'):
+
+            if ((temp >= "20".decode('hex')) and (temp <= "7e".decode('hex'))):
                 count+=1
             if count > len(MSGS)-1:
                 print "stop: " + k
-                print x
                 crount+=1
                 print crount
                 print
@@ -46,8 +45,8 @@ def findKey(MSGS):
     
 def main():
     MSGS = []
-    I = open('Encrypted.txt', 'r')
-    K = open('FoundKey.txt','w')
+    I = open('Encrypted2.txt', 'r')
+    #K = open('FoundKey.txt','w')
     
     for line in I:
         MSGS.append(line.rstrip('\n'))
@@ -55,7 +54,6 @@ def main():
     #print findKey(MSGS)
     #K.write(findKey(MSGS) + "\n")
     search(0,2,MSGS)
-
 
 if __name__ == "__main__":
     main()
