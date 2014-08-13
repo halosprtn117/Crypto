@@ -45,7 +45,7 @@ def findKey(MSGS):
     
 def main():
     MSGS = []
-    I = open('Encrypted2.txt', 'r')
+    I = open('Encrypted.txt', 'r')
     #K = open('FoundKey.txt','w')
     
     for line in I:
