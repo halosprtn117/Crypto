@@ -14,7 +14,7 @@ def strxor(a, b):     # xor two strings of different lengths
     else:
         return "".join([chr(ord(x) ^ ord(y)) for (x, y) in zip(a, b[:len(a)])])
    
-def search(i,j,MSGS):
+def searchSpace(i,j,MSGS):
     greatestcount = 0
     
     indexMSGS=[]
@@ -41,7 +41,7 @@ def search(i,j,MSGS):
 def findKey(MSGS):
     key=""
     for x in range(0,1024,2):
-        key += search(x,x+2,MSGS)
+        key += searchSpace(x,x+2,MSGS)
         
     return key
             
@@ -49,17 +49,14 @@ def findKey(MSGS):
     
 def main():
     MSGS = []
-    I = open('Encrypted2.txt', 'r')
-    K = open('FoundKey.txt','w')
+    I = open('Encrypted Text.txt', 'r')
+    K = open('Encryption Key.txt','w')
     
     for line in I:
         MSGS.append(line.rstrip('\n'))
         
     print findKey(MSGS)
     K.write(findKey(MSGS) + "\n")
-    #print search(28,30,MSGS)
-    #print search(0,2,MSGS)
-
 
 if __name__ == "__main__":
     main()

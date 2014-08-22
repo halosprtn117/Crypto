@@ -21,9 +21,9 @@ def decrypt(key, msg):
 
 def main():
     MSGS = []
-    I = open('Encrypted2.txt', 'r')
-    K = open('FoundKey.txt','r')
-    O = open('Decrypted.txt','w')
+    I = open('Encrypted Text.txt', 'r')
+    K = open('Encryption Key.txt','r')
+    O = open('Decrypted Text.txt','w')
     
     for line in I:
         MSGS.append(line.rstrip('\n'))
