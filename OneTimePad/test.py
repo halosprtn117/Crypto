@@ -9,24 +9,21 @@ class HelloApplication(Qt.QApplication):
             its __init__ method, then adding our widgets and finally starting 
             the exec_loop."""
         Qt.QApplication.__init__(self, args)
-        self.encryptedWidget()
+        self.addWidgets()
         self.exec_()        
  
-    def encryptedWidget(self):
+    def addWidgets(self):
         """ In this method, we're adding widgets and connecting signals from 
             these widgets to methods of our class, the so-called "slots" 
         """
-        self.encryptedLabel = QtGui.QLabel("Encrypted Text")      
-        self.EncryptedText = QtGui.QPlainTextEdit()
-        self.EncryptedText.setLineWrapMode(QtGui.QPlainTextEdit.NoWrap)
-        
-        self.connect(self.EncryptedText, Qt.SIGNAL("textChanged ()"), self.decryptor)
-        self.EncryptedText.show()
+        self.hellobutton = Qt.QPushButton("Say 'Hello world!'",None)
+        self.connect(self.hellobutton, Qt.SIGNAL("clicked()"), self.slotSayHello)
+        self.hellobutton.show()
  
-    def decrpyt(self):
+    def slotSayHello(self):
         """ This is an example slot, a method that gets called when a signal is 
             emitted """
-        print "Hello, World!"
+        print ("Hello, World!")
  
 # Only actually do something if this script is run standalone, so we can test our 
 # application, but we're also able to import this program without actually running
