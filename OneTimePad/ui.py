@@ -10,21 +10,18 @@ class myTextBox(QtGui.QPlainTextEdit):
     def __init__(self,label, parent = None):
         super(myTextBox, self).__init__(parent)
         self.setLineWrapMode(QtGui.QPlainTextEdit.NoWrap)
-        self.connect(self,SIGNAL("textChanged()"),self,SLOT("slotTextChanged()"))
+        #self.connect(self,SIGNAL("textChanged()"),self,SLOT("slotTextChanged()"))
         self.label = label
         
         pull(self)
 
-
-    #def _setLabel(self,label): 
-    #    self._label = label
-
     def getLabel(self):
         return  self.label
 
+    """
     @pyqtSlot()
     def slotTextChanged(self):
-        push(self)
+        
         #print self.toPlainText()
         print "This"
         msg = self.textCursor().blockNumber()
@@ -35,9 +32,9 @@ class myTextBox(QtGui.QPlainTextEdit):
         print index
         print guess
         print
-        focusKeyFind.edit(msg,index,guess)
+        #focusKeyFind.edit(msg,index,guess)
         #pull(self._getLabel(),self)
-    
+    """
     #label = property(_getLabel,_setLabel)
 
 
@@ -56,6 +53,9 @@ class textComparer(QtGui.QWidget):
 
         DecryptedText = myTextBox("Decrypted Text")
         #DecryptedText.label = "Decrypted Text"
+        
+        run = Qt.QPushButton("Update",None)
+        self.connect(self,SIGNAL("clicked()"),self,SLOT("slotButtonPressed()"))
 
  
         mainLayout = QtGui.QVBoxLayout()
@@ -70,6 +70,13 @@ class textComparer(QtGui.QWidget):
 
         self.setLayout(mainLayout)
         self.setWindowTitle("Decrypter Guess App")
+        
+    def slotButtonPressed(self):
+        pull(EncryptedText)
+        pull(KeyText)
+        pull(DecryptedText)
+        
+        
 
 def pull(self):
     textfile = self.getLabel()
