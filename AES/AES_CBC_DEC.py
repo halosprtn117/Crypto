@@ -1,20 +1,15 @@
 import sys
 
-from Crypto import Random
 from Crypto.Cipher import AES
 
-
-key = Random.new().read(16)
-K = open('Encryption Key.txt','w')
-K.write(key.encode('hex') + "\n")
-
+K = open('Encryption Key.txt','r')
+key = K.readline().rstrip('\n')
 
 MSGS = []
-ENC_MSGS=[]
-I = open('Messages.txt', 'r')
+M = open('Encrypted Test.txt', 'r')
     
-for line in I:
-    MSGS.append(line.rstrip('\n').encode('hex'))
+for line in M:
+    MSGS.append(line.rstrip('\n'))
 
 #Strings have to be decoded if the string is in hex
 def strxor(a, b):     # xor two strings of different lengths
@@ -23,20 +18,11 @@ def strxor(a, b):     # xor two strings of different lengths
     else:
         return "".join([chr(ord(x) ^ ord(y)) for (x, y) in zip(a, b[:len(a)])])
 
-def addIV(MSGS,m):
-    IV = Random.new().read(16)
-    MSGS[m]=IV.encode('hex')+"" + MSGS[m]
-
-def padd(IV,msg):
-    mess_length=len(msg)/2
-    IV_len=len(IV.encode('hex'))/2
-    extra_bytes=mess_length%IV_len
-    padd_bytes=IV_len-extra_bytes
+def unpadd(msg):
+    temp=msg
+    padd_bytes = temp[len(temp)-2:len(temp)].decode('hex')
     
-    for x in range(0,padd_bytes):
-        msg+="{:02x}".format(padd_bytes)
-
-    return msg
+    return temp[0:len(temp)-ord(padd_bytes)*2]
 
 def cbc(previous, next):
     temp = strxor(previous.decode('hex'),next.decode('hex'))
@@ -46,8 +32,7 @@ def cbc(previous, next):
 def encryption(msg):
     length = len(msg)
     num_mess = length/len(key.encode('hex'))
-    
-    temp=msg
+    temp=IV.encode('hex')
     
     for x in range(0,num_mess):
         temp+=cbc(temp[x*32:(x+1)*32],msg[x*32:(x+1)*32])
@@ -71,9 +56,7 @@ def main():
     aes=AES.new(key,AES.MODE_CBC, IV)
     print "Python Encryption: \t" + IV.encode('hex') + aes.encrypt(prepared.decode('hex')).encode('hex')
 
-    O = open('Encrypted Text.txt','w')    
-    for msg in MSGS:
-        O.write(encription(key, msg)+ "\n")
-    
+
+
 if __name__ == "__main__":
     main()
