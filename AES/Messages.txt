@@ -1,1 +1,0 @@
-This is a long message so that i CAN test whether the program runs correctly.
